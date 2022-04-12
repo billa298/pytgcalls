@@ -27,7 +27,7 @@ export class FFmpegReader {
         this.isLiveSharing = path.startsWith('device://');
         this.start_conversion(list_cmd[0].split(':_cmd_:').concat([
             '-i',
-            path.replace('fifo://', '').replace('device://', ''),
+            path.replace('fifo://', '').replace('device://', ''),]).concat(list_cmd[1].split(':_cmd_:')).concat([
             '-f',
             's16le',
             '-ac',
@@ -35,7 +35,7 @@ export class FFmpegReader {
             '-ar',
             bitrate,
             'pipe:1',
-        ]).concat(list_cmd[1].split(':_cmd_:')));
+        ]));
     }
     public convert_video(path: string, width: string, height: string, framerate: string){
        let list_cmd = this.additional_parameters.split('-atend');
@@ -46,7 +46,7 @@ export class FFmpegReader {
        this.isLiveSharing = path.startsWith('screen://');
        this.start_conversion(list_cmd[0].split(':_cmd_:').concat([
             '-i',
-            path.replace('fifo://', '').replace('screen://', '').replace('image:', ''),
+            path.replace('fifo://', '').replace('screen://', '').replace('image:', ''),]).concat(list_cmd[1].split(':_cmd_:')).concat([
             '-f',
             'rawvideo',
             '-pix_fmt',
@@ -56,7 +56,7 @@ export class FFmpegReader {
             '-vf',
             'scale=' + width + ':' + height,
             'pipe:1',
-        ]).concat(list_cmd[1].split(':_cmd_:')));
+        ]));
     }
     private start_conversion(params: Array<string>) {
         params = params.filter(e => e);
